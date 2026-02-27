@@ -1,0 +1,113 @@
+@using System.Globalization
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer L
+
+<!DOCTYPE html>
+<html lang="@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <meta name="description" content="@L["MetaDescription"]"/>
+
+    <title>@ViewData["Title"] - YTDownloader</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="icon" type="image/svg+xml"
+          href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%23FF0000' d='M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z'/></svg>"/>
+</head>
+<body>
+<nav class="navbar">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#FF0000" width="28" height="28">
+                <path
+                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+            </svg>
+            <span class="brand-text">YTDownloader</span>
+        </a>
+
+        <div class="navbar-links" style="display:flex; gap:12px; align-items:center;">
+            <span class="nav-badge">Beta</span>
+
+            @{
+                var current = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+                var returnUrl = Context.Request.Path + Context.Request.QueryString;
+
+                var langs = new[]
+                {
+                    new { Code = "ky", Label = "Кыргызча" },
+                    new { Code = "kk", Label = "Қазақша" },
+                    new { Code = "ru", Label = "Русский" },
+                    new { Code = "en", Label = "English" },
+                    new { Code = "de", Label = "Deutsch" },
+                };
+
+                var currentLabel = langs.FirstOrDefault(x => x.Code == current)?.Label ?? "English";
+            }
+
+            <div class="lang-dropdown" title="@L["Language"]">
+                <button type="button" class="lang-btn" id="langBtn" aria-haspopup="listbox" aria-expanded="false">
+                    <span class="lang-btn-text">@currentLabel</span>
+                    <svg class="lang-caret" viewBox="0 0 24 24" width="16" height="16" fill="none">
+                        <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+
+                <div class="lang-menu" id="langMenu" role="listbox" aria-label="@L["Language"]">
+                    @foreach (var l in langs)
+                    {
+                        var url = $"/culture/set?culture={l.Code}&returnUrl={Uri.EscapeDataString(returnUrl)}";
+                        <a class="lang-item @(l.Code == current ? "active" : "")" href="@url" role="option" aria-selected="@(l.Code==current)">
+                            <span class="lang-dot"></span>
+                            <span>@l.Label</span>
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main>
+    @RenderBody()
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <p>@L["FooterText"]</p>
+    </div>
+</footer>
+
+<script>
+    (function () {
+        const btn = document.getElementById('langBtn');
+        const menu = document.getElementById('langMenu');
+        if (!btn || !menu) return;
+
+        function close() {
+            menu.classList.remove('open');
+            btn.setAttribute('aria-expanded', 'false');
+        }
+
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = menu.classList.toggle('open');
+            btn.setAttribute('aria-expanded', String(isOpen));
+        });
+
+        document.addEventListener('click', close);
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') close();
+        });
+    })();
+</script>
+
+<script src="~/js/site.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

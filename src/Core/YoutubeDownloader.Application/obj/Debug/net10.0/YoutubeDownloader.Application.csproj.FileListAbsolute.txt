@@ -1,0 +1,15 @@
+C:\Users\ejumadylov\Downloads\YoutubeDownloader\YoutubeDownloader\src\Core\YoutubeDownloader.Application\bin\Debug\net10.0\YoutubeDownloader.Application.deps.json
+C:\Users\ejumadylov\Downloads\YoutubeDownloader\YoutubeDownloader\src\Core\YoutubeDownloader.Application\bin\Debug\net10.0\YoutubeDownloader.Application.dll
+C:\Users\ejumadylov\Downloads\YoutubeDownloader\YoutubeDownloader\src\Core\YoutubeDownloader.Application\bin\Debug\net10.0\YoutubeDownloader.Application.pdb
+C:\Users\ejumadylov\Downloads\YoutubeDownloader\YoutubeDownloader\src\Core\YoutubeDownloader.Application\bin\Debug\net10.0\YoutubeDownloader.Domain.dll
+C:\Users\ejumadylov\Downloads\YoutubeDownloader\YoutubeDownloader\src\Core\YoutubeDownloader.Application\bin\Debug\net10.0\YoutubeDownloader.Domain.pdb
+C:\Users\ejumadylov\Downloads\YoutubeDownloader\YoutubeDownloader\src\Core\YoutubeDownloader.Application\obj\Debug\net10.0\YoutubeDownloader.Application.csproj.AssemblyReference.cache
+C:\Users\ejumadylov\Downloads\YoutubeDownloader\YoutubeDownloader\src\Core\YoutubeDownloader.Application\obj\Debug\net10.0\YoutubeDownloader.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ejumadylov\Downloads\YoutubeDownloader\YoutubeDownloader\src\Core\YoutubeDownloader.Application\obj\Debug\net10.0\YoutubeDownloader.Application.AssemblyInfoInputs.cache
+C:\Users\ejumadylov\Downloads\YoutubeDownloader\YoutubeDownloader\src\Core\YoutubeDownloader.Application\obj\Debug\net10.0\YoutubeDownloader.Application.AssemblyInfo.cs
+C:\Users\ejumadylov\Downloads\YoutubeDownloader\YoutubeDownloader\src\Core\YoutubeDownloader.Application\obj\Debug\net10.0\YoutubeDownloader.Application.csproj.CoreCompileInputs.cache
+C:\Users\ejumadylov\Downloads\YoutubeDownloader\YoutubeDownloader\src\Core\YoutubeDownloader.Application\obj\Debug\net10.0\YoutubeD.4615B98F.Up2Date
+C:\Users\ejumadylov\Downloads\YoutubeDownloader\YoutubeDownloader\src\Core\YoutubeDownloader.Application\obj\Debug\net10.0\YoutubeDownloader.Application.dll
+C:\Users\ejumadylov\Downloads\YoutubeDownloader\YoutubeDownloader\src\Core\YoutubeDownloader.Application\obj\Debug\net10.0\refint\YoutubeDownloader.Application.dll
+C:\Users\ejumadylov\Downloads\YoutubeDownloader\YoutubeDownloader\src\Core\YoutubeDownloader.Application\obj\Debug\net10.0\YoutubeDownloader.Application.pdb
+C:\Users\ejumadylov\Downloads\YoutubeDownloader\YoutubeDownloader\src\Core\YoutubeDownloader.Application\obj\Debug\net10.0\ref\YoutubeDownloader.Application.dll

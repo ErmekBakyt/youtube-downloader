@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>youtube-downloader-secrets</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\YoutubeDownloader.Application\YoutubeDownloader.Application.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\YoutubeDownloader.Infrastructure\YoutubeDownloader.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

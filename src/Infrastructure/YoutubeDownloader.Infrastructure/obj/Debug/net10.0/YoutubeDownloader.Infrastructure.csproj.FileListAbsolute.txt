@@ -1,0 +1,17 @@
+C:\Users\ejumadylov\Downloads\YoutubeDownloader\YoutubeDownloader\src\Infrastructure\YoutubeDownloader.Infrastructure\bin\Debug\net10.0\YoutubeDownloader.Infrastructure.deps.json
+C:\Users\ejumadylov\Downloads\YoutubeDownloader\YoutubeDownloader\src\Infrastructure\YoutubeDownloader.Infrastructure\bin\Debug\net10.0\YoutubeDownloader.Infrastructure.dll
+C:\Users\ejumadylov\Downloads\YoutubeDownloader\YoutubeDownloader\src\Infrastructure\YoutubeDownloader.Infrastructure\bin\Debug\net10.0\YoutubeDownloader.Infrastructure.pdb
+C:\Users\ejumadylov\Downloads\YoutubeDownloader\YoutubeDownloader\src\Infrastructure\YoutubeDownloader.Infrastructure\bin\Debug\net10.0\YoutubeDownloader.Application.dll
+C:\Users\ejumadylov\Downloads\YoutubeDownloader\YoutubeDownloader\src\Infrastructure\YoutubeDownloader.Infrastructure\bin\Debug\net10.0\YoutubeDownloader.Domain.dll
+C:\Users\ejumadylov\Downloads\YoutubeDownloader\YoutubeDownloader\src\Infrastructure\YoutubeDownloader.Infrastructure\bin\Debug\net10.0\YoutubeDownloader.Application.pdb
+C:\Users\ejumadylov\Downloads\YoutubeDownloader\YoutubeDownloader\src\Infrastructure\YoutubeDownloader.Infrastructure\bin\Debug\net10.0\YoutubeDownloader.Domain.pdb
+C:\Users\ejumadylov\Downloads\YoutubeDownloader\YoutubeDownloader\src\Infrastructure\YoutubeDownloader.Infrastructure\obj\Debug\net10.0\YoutubeDownloader.Infrastructure.csproj.AssemblyReference.cache
+C:\Users\ejumadylov\Downloads\YoutubeDownloader\YoutubeDownloader\src\Infrastructure\YoutubeDownloader.Infrastructure\obj\Debug\net10.0\YoutubeDownloader.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ejumadylov\Downloads\YoutubeDownloader\YoutubeDownloader\src\Infrastructure\YoutubeDownloader.Infrastructure\obj\Debug\net10.0\YoutubeDownloader.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\ejumadylov\Downloads\YoutubeDownloader\YoutubeDownloader\src\Infrastructure\YoutubeDownloader.Infrastructure\obj\Debug\net10.0\YoutubeDownloader.Infrastructure.AssemblyInfo.cs
+C:\Users\ejumadylov\Downloads\YoutubeDownloader\YoutubeDownloader\src\Infrastructure\YoutubeDownloader.Infrastructure\obj\Debug\net10.0\YoutubeDownloader.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\ejumadylov\Downloads\YoutubeDownloader\YoutubeDownloader\src\Infrastructure\YoutubeDownloader.Infrastructure\obj\Debug\net10.0\YoutubeD.62EE50E3.Up2Date
+C:\Users\ejumadylov\Downloads\YoutubeDownloader\YoutubeDownloader\src\Infrastructure\YoutubeDownloader.Infrastructure\obj\Debug\net10.0\YoutubeDownloader.Infrastructure.dll
+C:\Users\ejumadylov\Downloads\YoutubeDownloader\YoutubeDownloader\src\Infrastructure\YoutubeDownloader.Infrastructure\obj\Debug\net10.0\refint\YoutubeDownloader.Infrastructure.dll
+C:\Users\ejumadylov\Downloads\YoutubeDownloader\YoutubeDownloader\src\Infrastructure\YoutubeDownloader.Infrastructure\obj\Debug\net10.0\YoutubeDownloader.Infrastructure.pdb
+C:\Users\ejumadylov\Downloads\YoutubeDownloader\YoutubeDownloader\src\Infrastructure\YoutubeDownloader.Infrastructure\obj\Debug\net10.0\ref\YoutubeDownloader.Infrastructure.dll

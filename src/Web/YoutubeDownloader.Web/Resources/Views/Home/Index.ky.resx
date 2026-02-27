@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Title" xml:space="preserve">
+    <value>YouTube Downloader</value>
+  </data>
+  <data name="HeroSubtitleHtml" xml:space="preserve">
+    <value>YouTube видеолорун бир нече секундта жүктөңүз.&lt;br/&gt;Жогорку сапат, тез жана акысыз.</value>
+  </data>
+  <data name="UrlPlaceholder" xml:space="preserve">
+    <value>YouTube видео шилтемесин бул жерге чаптаңыз...</value>
+  </data>
+  <data name="Analyze" xml:space="preserve">
+    <value>Талдоо</value>
+  </data>
+  <data name="Analyzing" xml:space="preserve">
+    <value>Талданып жатат...</value>
+  </data>
+  <data name="HintExamplePrefix" xml:space="preserve">
+    <value>Мисал:</value>
+  </data>
+  <data name="ExampleUrl" xml:space="preserve">
+    <value>https://www.youtube.com/watch?v=dQw4w9WgXcQ</value>
+  </data>
+  <data name="VideoInfoLoading" xml:space="preserve">
+    <value>Видео маалыматы алынууда...</value>
+  </data>
+  <data name="Retry" xml:space="preserve">
+    <value>Кайра аракет</value>
+  </data>
+  <data name="ThumbnailAlt" xml:space="preserve">
+    <value>Видео миниатюрасы</value>
+  </data>
+  <data name="ViewsLabel" xml:space="preserve">
+    <value>көрүүлөр</value>
+  </data>
+  <data name="QualityChoose" xml:space="preserve">
+    <value>Сапатты тандаңыз</value>
+  </data>
+  <data name="QualitySelect" xml:space="preserve">
+    <value>Сапатты тандаңыз</value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Жүктөө</value>
+  </data>
+  <data name="Preparing" xml:space="preserve">
+    <value>Даярдалып жатат...</value>
+  </data>
+  <data name="Downloaded" xml:space="preserve">
+    <value>Жүктөлдү!</value>
+  </data>
+  <data name="DownloadError" xml:space="preserve">
+    <value>Жүктөө катасы</value>
+  </data>
+  <data name="DownloadingWait" xml:space="preserve">
+    <value>Жүктөлүүдө, күтө туруңуз...</value>
+  </data>
+  <data name="DownloadHint" xml:space="preserve">
+    <value>Жүктөө үчүн адегенде сапатты тандаңыз</value>
+  </data>
+  <data name="NewSearch" xml:space="preserve">
+    <value>Жаңы видео издөө</value>
+  </data>
+  <data name="NoFormats" xml:space="preserve">
+    <value>Формат табылган жок.</value>
+  </data>
+  <data name="AudioLabel" xml:space="preserve">
+    <value>Аудио</value>
+  </data>
+  <data name="Recommended" xml:space="preserve">
+    <value>Сунушталат</value>
+  </data>
+  <data name="InvalidUrl" xml:space="preserve">
+    <value>Туура YouTube URL киргизиңиз.</value>
+  </data>
+  <data name="ServerError" xml:space="preserve">
+    <value>Сервер катасы</value>
+  </data>
+  <data name="FetchFailed" xml:space="preserve">
+    <value>Видео маалыматын алуу мүмкүн болгон жок.</value>
+  </data>
+  <data name="FeatureFastTitle" xml:space="preserve">
+    <value>Өтө тез</value>
+  </data>
+  <data name="FeatureFastDesc" xml:space="preserve">
+    <value>Дароо маалымат жана тез жүктөө</value>
+  </data>
+  <data name="FeatureQualityTitle" xml:space="preserve">
+    <value>Жогорку сапат</value>
+  </data>
+  <data name="FeatureQualityDesc" xml:space="preserve">
+    <value>4K, 1080p, 720p жана башкалар</value>
+  </data>
+  <data name="FeatureMp3Title" xml:space="preserve">
+    <value>MP3 колдоосу</value>
+  </data>
+  <data name="FeatureMp3Desc" xml:space="preserve">
+    <value>Аудионы өзүнчө жүктөө</value>
+  </data>
+  <data name="FeatureSecureTitle" xml:space="preserve">
+    <value>Коопсуз</value>
+  </data>
+  <data name="FeatureSecureDesc" xml:space="preserve">
+    <value>Катталуу талап кылынбайт, толугу менен акысыз</value>
+  </data>
+</root>
