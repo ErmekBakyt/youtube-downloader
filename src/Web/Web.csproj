@@ -5,12 +5,11 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>youtube-downloader-secrets</UserSecretsId>
-    <RootNamespace>YoutubeDownloader.Web</RootNamespace>
+    <RootNamespace>Web</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\YoutubeDownloader.Application\YoutubeDownloader.Application.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\YoutubeDownloader.Infrastructure\YoutubeDownloader.Infrastructure.csproj" />
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
