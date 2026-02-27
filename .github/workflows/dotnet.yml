@@ -30,11 +30,11 @@ jobs:
       run: |
           ls
     - name: CD
-      run: cd ./src
+      run: cd src
     - name: LS
       run: |
           ls
-          cd Web
+          cd src/Web
           ls
           cd bin
           ls
