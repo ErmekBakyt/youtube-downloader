@@ -27,7 +27,7 @@ jobs:
     - name: Publish
       run: dotnet publish ./get-video.sln --configuration Release --output src/Web/bin/Release/net10.0/publish/ --no-restore 
     - name: CD
-      run: cd src
+      run: cd ./src
     - name: LS
       run: |
           ls
