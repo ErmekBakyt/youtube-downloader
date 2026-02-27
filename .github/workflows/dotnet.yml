@@ -25,7 +25,7 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore
     - name: Publish
-      run: dotnet publish ./src/Web.sln --configuration Release --output src/Web/bin/Release/net10.0/publish/ --no-restore 
+      run: dotnet publish ./get-video.sln --configuration Release --output src/Web/bin/Release/net10.0/publish/ --no-restore 
     - name: CD
       run: cd Web
     - name: LS
