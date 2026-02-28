@@ -62,8 +62,34 @@ jobs:
         username: root
         password: ${{secrets.ACTION_PRIVATE_KEY}}
         script: |
-          docker login  --username=ermek92 --password=ermek1212
-          docker pull ermek92/getvideo:latest
-          docker stop get-video
-          docker rm get-video
-          docker run -p 8080:8080 -d --network get-video --name get-video ermek92/getvideo:latest
+            set -euo pipefail
+
+            APP_NAME="get-video"
+            IMAGE="ermek92/getvideo:latest"
+            PORT_HOST=8080
+            PORT_CONT=8080
+            NETWORK="get-video"
+
+            echo "== Docker login =="
+            echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+            echo "== Pull image =="
+            docker pull "$IMAGE"
+
+            echo "== Ensure network exists =="
+            docker network inspect "$NETWORK" >/dev/null 2>&1 || docker network create "$NETWORK"
+
+            echo "== Stop & remove old container if exists =="
+            docker rm -f "$APP_NAME" >/dev/null 2>&1 || true
+
+            echo "== Run new container =="
+            docker run -d \
+              --name "$APP_NAME" \
+              --restart unless-stopped \
+              --network "$NETWORK" \
+              -p "${PORT_HOST}:${PORT_CONT}" \
+              "$IMAGE"
+
+            echo "== Status =="
+            docker ps --filter "name=$APP_NAME"
+            docker logs --tail 30 "$APP_NAME" || true
