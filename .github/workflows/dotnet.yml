@@ -60,8 +60,7 @@ jobs:
       with:
         host: 62.171.188.96
         username: root
-        key: ${{secrets.ACTION_PRIVATE_KEY}}
-        envs: GITHUB_SHA
+        password: ${{secrets.ACTION_PRIVATE_KEY}}
         script: |
           docker login  --username=ermek92 --password=ermek1212
           docker pull ermek92/getvideo:latest
