@@ -90,6 +90,9 @@ jobs:
               -p "${PORT_HOST}:${PORT_CONT}" \
               "$IMAGE"
 
+            echo "== Cleanup unused images =="
+            docker image prune -f
+
             echo "== Status =="
             docker ps --filter "name=$APP_NAME"
             docker logs --tail 30 "$APP_NAME" || true
