@@ -36,7 +36,7 @@ jobs:
           overwrite: true
 
       - name: Run app on port 8081 (temporary)
-        uses: appleboy/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@master
         with:
           host: 62.171.188.96
           username: root
