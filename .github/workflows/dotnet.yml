@@ -32,7 +32,7 @@ jobs:
           username: root
           password: ${{ secrets.SSH_PASSWORD }}
           source: "publish/*"
-          target: "/opt/get-video/hosttest"
+          target: "/opt/get-video/hosttest/publish"
           overwrite: true
 
       - name: Run app on port 8081 (temporary, detached)
@@ -44,24 +44,23 @@ jobs:
           script: |
             set -euo pipefail
 
-            APP_DIR="/opt/get-video/hosttest"
+            APP_DIR="/opt/get-video/hosttest/publish"
             APP_DLL="${APP_DIR}/Web.dll"
-            LOG="${APP_DIR}/hosttest.log"
+            LOG="/opt/get-video/hosttest/hosttest.log"
             PORT=8081
 
             echo "== Verify files on server =="
             ls -la "${APP_DIR}" | head -n 50
 
             if [ ! -f "${APP_DLL}" ]; then
-              echo "ERROR: ${APP_DLL} not found. Check publish output and SCP step."
+              echo "ERROR: ${APP_DLL} not found. Check publish output name (Web.dll) and SCP step."
               exit 1
             fi
 
             echo "== Kill old test process (if any) =="
             pkill -f "${APP_DLL}" || true
 
-            echo "== Start new process detached (survives SSH session) =="
-            # setsid fully detaches from SSH; output goes to log
+            echo "== Start new process detached =="
             setsid /opt/dotnet/dotnet "${APP_DLL}" --urls "http://0.0.0.0:${PORT}" > "${LOG}" 2>&1 < /dev/null &
 
             sleep 2
@@ -75,14 +74,3 @@ jobs:
 
             echo "✅ Host test is running: http://SERVER_IP:${PORT}"
             echo "Log: ${LOG}"
-
-      - name: Stop app (optional manual step)
-        if: ${{ false }}
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: 62.171.188.96
-          username: root
-          password: ${{ secrets.SSH_PASSWORD }}
-          script: |
-            pkill -f "/opt/get-video/hosttest/Web.dll" || true
-            echo "Stopped."
