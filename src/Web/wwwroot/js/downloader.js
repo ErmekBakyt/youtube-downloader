@@ -38,9 +38,10 @@ async function fetchVideoInfo() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'RequestVerificationToken': token
+                'X-CSRF-TOKEN': token
             },
-            body: JSON.stringify({ url })
+            body: JSON.stringify({ url }),
+            credentials: 'same-origin'
         });
 
         if (!response.ok) {
@@ -164,12 +165,13 @@ async function downloadVideo() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'RequestVerificationToken': token
+                'X-CSRF-TOKEN': token
             },
             body: JSON.stringify({
                 url: currentVideoUrl,
                 formatId: selectedFormatId
-            })
+            }),
+            credentials: 'same-origin'
         });
 
         if (!response.ok) {

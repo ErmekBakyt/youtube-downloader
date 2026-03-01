@@ -6,8 +6,6 @@
     Layout = "_Layout";
 }
 
-<!-- Antiforgery token: JS bunu inputtan okuyacak -->
-@Html.AntiForgeryToken()
 
 <script>
   // JS için lokalize metinler
@@ -34,7 +32,9 @@
     recommended: "@JavaScriptEncoder.Default.Encode(L["Recommended"].Value)"
   };
 </script>
-
+<form id="antiForgeryForm" method="post" style="display:none">
+    @Html.AntiForgeryToken()
+</form>
 <div class="hero-section">
     <div class="container">
         <div class="hero-content text-center">
