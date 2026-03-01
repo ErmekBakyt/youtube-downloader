@@ -63,7 +63,7 @@
                        placeholder="@L["UrlPlaceholder"]"
                        autocomplete="off"
                        spellcheck="false" />
-                <button id="fetchBtn" class="fetch-btn" onclick="fetchVideoInfo()">
+                <button type="button" id="fetchBtn" class="fetch-btn" onclick="fetchVideoInfo()">
                     <span class="btn-text">@L["Analyze"]</span>
                     <svg class="btn-arrow" viewBox="0 0 24 24" fill="none">
                         <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -88,7 +88,7 @@
             <div class="error-card">
                 <div class="error-icon">⚠️</div>
                 <p id="errorMessage" class="error-message"></p>
-                <button class="retry-btn" onclick="resetState()">@L["Retry"]</button>
+                <button type="button" class="retry-btn" onclick="resetState()">@L["Retry"]</button>
             </div>
         </div>
 
@@ -142,7 +142,7 @@
 
                 <!-- Download Button -->
                 <div class="download-section">
-                    <button id="downloadBtn" class="download-btn" onclick="downloadVideo()" disabled>
+                    <button id="downloadBtn" type="button" class="download-btn" onclick="downloadVideo()" disabled>
                         <svg viewBox="0 0 24 24" fill="none" width="22" height="22">
                             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
@@ -161,7 +161,7 @@
             </div>
 
             <!-- New Search Button -->
-            <button class="new-search-btn" onclick="resetState()">
+            <button class="new-search-btn" type="button" onclick="resetState()">
                 <svg viewBox="0 0 24 24" fill="none" width="18" height="18">
                     <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                 </svg>

@@ -2,6 +2,7 @@ using System.Globalization;
 using Application.Interfaces;
 using Application.Services;
 using Infrastructure.Services;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -14,6 +15,11 @@ builder.Logging.AddDebug();
 
 // ✅ Localization
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+builder.Services
+    .AddDataProtection()
+    .PersistKeysToFileSystem(new DirectoryInfo("/home/app/.aspnet/DataProtection-Keys"))
+    .SetApplicationName("getvideo");
 
 // ✅ MVC + View localization
 builder.Services

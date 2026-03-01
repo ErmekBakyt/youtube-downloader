@@ -318,7 +318,7 @@ function isYoutubeUrl(url) {
 }
 
 function getAntiForgeryToken() {
-    const input = document.querySelector('input[name="__RequestVerificationToken"]');
+    const input = document.querySelector('#antiForgeryForm input[name="__RequestVerificationToken"]');
     return input ? input.value : '';
 }
 
