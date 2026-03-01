@@ -12,7 +12,7 @@ public class HomeController(VideoService videoService, ILogger<HomeController> l
     }
 
     [HttpPost]
-    //[ValidateAntiForgeryToken]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> GetVideoInfo([FromBody] GetVideoInfoRequest request, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(request?.Url))
@@ -23,7 +23,7 @@ public class HomeController(VideoService videoService, ILogger<HomeController> l
     }
 
     [HttpPost]
-    //[ValidateAntiForgeryToken]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Download([FromBody] DownloadRequestDto request, CancellationToken cancellationToken)
     {
         try

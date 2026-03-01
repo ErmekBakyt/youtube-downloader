@@ -82,7 +82,6 @@ app.UseRouting();
 app.UseResponseCaching();
 app.UseResponseCompression();
 
-app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
