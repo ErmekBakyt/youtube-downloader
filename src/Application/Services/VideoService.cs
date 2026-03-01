@@ -31,14 +31,12 @@ public class VideoService(
         }
         catch (OperationCanceledException oce) when (cancellationToken.IsCancellationRequested)
         {
-            // Normal: user cancel / request aborted
             logger.LogInformation(oce, "GetVideoInfoAsync canceled. Url={Url}", url);
             return ApiResponseDto<VideoInfoDto>.Fail(L["VideoInfoFailed"]);
         }
         catch (Exception ex)
         {
             logger.LogError(ex, "GetVideoInfoAsync failed. Url={Url}", url);
-            // Client’a stacktrace göndermiyoruz
             return ApiResponseDto<VideoInfoDto>.Fail(L["VideoInfoFailed"]);
         }
     }
