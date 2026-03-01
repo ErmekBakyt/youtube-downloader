@@ -55,44 +55,35 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }} 
         
-    - name: Pull and Deploy
+    - name: Pull and Deploy (docker compose)
       uses: appleboy/ssh-action@master
       with:
         host: 62.171.188.96
         username: root
-        password: ${{secrets.ACTION_PRIVATE_KEY}}
+        password: ${{ secrets.SSH_PASSWORD }}
         script: |
-            set -euo pipefail
+          set -euo pipefail
 
-            APP_NAME="get-video"
-            IMAGE="ermek92/getvideo:latest"
-            PORT_HOST=8080
-            PORT_CONT=8080
-            NETWORK="get-video"
+          cd /opt/get-video
 
-            echo "== Docker login =="
-            echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+          echo "== Docker login =="
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-            echo "== Pull image =="
-            docker pull "$IMAGE"
+          # compose servis adı (docker-compose.yml'deki service key)
+          SERVICE="app"
 
-            echo "== Ensure network exists =="
-            docker network inspect "$NETWORK" >/dev/null 2>&1 || docker network create "$NETWORK"
+          echo "== Pull latest image for $SERVICE =="
+          docker compose pull $SERVICE
+          
+          echo "== Remove legacy container name conflict (if any) =="
+          docker rm -f get-video 2>/dev/null || true
+          
+          echo "== Recreate only $SERVICE (nginx dokunma) =="
+          docker compose up -d --no-deps $SERVICE
 
-            echo "== Stop & remove old container if exists =="
-            docker rm -f "$APP_NAME" >/dev/null 2>&1 || true
+          echo "== Cleanup unused images =="
+          docker image prune -f
 
-            echo "== Run new container =="
-            docker run -d \
-              --name "$APP_NAME" \
-              --restart unless-stopped \
-              --network "$NETWORK" \
-              -p "${PORT_HOST}:${PORT_CONT}" \
-              "$IMAGE"
-
-            echo "== Cleanup unused images =="
-            docker image prune -f
-
-            echo "== Status =="
-            docker ps --filter "name=$APP_NAME"
-            docker logs --tail 30 "$APP_NAME" || true
+          echo "== Status =="
+          docker compose ps
+          docker logs --tail 50 get-video || true
