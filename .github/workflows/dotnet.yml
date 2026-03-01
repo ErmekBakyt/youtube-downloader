@@ -5,7 +5,7 @@ on:
     branches: ["master"]
 
 jobs:
-  build:
+  host_test:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,12 +20,12 @@ jobs:
         run: dotnet restore
 
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build -c Release --no-restore
 
       - name: Publish (linux-x64)
         run: dotnet publish ./get-video.sln -c Release -r linux-x64 --self-contained false -o publish
 
-      - name: Upload publish to server
+      - name: Upload publish to server (SCP)
         uses: appleboy/scp-action@v0.1.7
         with:
           host: 62.171.188.96
@@ -35,8 +35,8 @@ jobs:
           target: "/opt/get-video/hosttest"
           overwrite: true
 
-      - name: Run app on port 8081 (temporary)
-        uses: appleboy/ssh-action@master
+      - name: Run app on port 8081 (temporary, detached)
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: 62.171.188.96
           username: root
@@ -44,13 +44,45 @@ jobs:
           script: |
             set -euo pipefail
 
-            # old test process kill (if exists)
-            pkill -f "/opt/get-video/hosttest/Web.dll" || true
+            APP_DIR="/opt/get-video/hosttest"
+            APP_DLL="${APP_DIR}/Web.dll"
+            LOG="${APP_DIR}/hosttest.log"
+            PORT=8081
 
-            # run in background
-            nohup /opt/dotnet/dotnet /opt/get-video/hosttest/Web.dll \
-              --urls http://0.0.0.0:8081 \
-              > /opt/get-video/hosttest/hosttest.log 2>&1 &
+            echo "== Verify files on server =="
+            ls -la "${APP_DIR}" | head -n 50
+
+            if [ ! -f "${APP_DLL}" ]; then
+              echo "ERROR: ${APP_DLL} not found. Check publish output and SCP step."
+              exit 1
+            fi
+
+            echo "== Kill old test process (if any) =="
+            pkill -f "${APP_DLL}" || true
+
+            echo "== Start new process detached (survives SSH session) =="
+            # setsid fully detaches from SSH; output goes to log
+            setsid /opt/dotnet/dotnet "${APP_DLL}" --urls "http://0.0.0.0:${PORT}" > "${LOG}" 2>&1 < /dev/null &
 
             sleep 2
-            curl -I http://127.0.0.1:8081/ | head -n 20
+
+            echo "== Health check =="
+            if ! curl -I "http://127.0.0.1:${PORT}/" | head -n 20; then
+              echo "== App log tail =="
+              tail -n 120 "${LOG}" || true
+              exit 1
+            fi
+
+            echo "✅ Host test is running: http://SERVER_IP:${PORT}"
+            echo "Log: ${LOG}"
+
+      - name: Stop app (optional manual step)
+        if: ${{ false }}
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: 62.171.188.96
+          username: root
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            pkill -f "/opt/get-video/hosttest/Web.dll" || true
+            echo "Stopped."
