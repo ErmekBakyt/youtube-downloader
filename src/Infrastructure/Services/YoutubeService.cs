@@ -12,9 +12,10 @@ public partial class YoutubeService : IYoutubeService
 {
     private readonly YoutubeClient _youtubeClient;
 
-    public YoutubeService()
+    public YoutubeService(HttpClient http)
     {
-        _youtubeClient = new YoutubeClient();
+        // YoutubeExplode ушул HttpClient аркылуу чыгат
+        _youtubeClient = new YoutubeClient(http);
     }
 
     public bool IsValidYoutubeUrl(string url)

@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Net;
 using Application.Interfaces;
 using Application.Services;
 using Infrastructure.Services;
@@ -32,6 +33,22 @@ builder.Services.AddAntiforgery(o =>
 {
     o.HeaderName = "X-CSRF-TOKEN";
 });
+
+builder.Services.AddHttpClient<IYoutubeService, YoutubeService>(client =>
+    {
+        client.Timeout = TimeSpan.FromSeconds(30);
+
+        // Реалдуу браузерге окшош UA
+        client.DefaultRequestHeaders.UserAgent.ParseAdd(
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36");
+
+        client.DefaultRequestHeaders.Accept.ParseAdd("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+        client.DefaultRequestHeaders.AcceptLanguage.ParseAdd("en-US,en;q=0.9");
+    })
+    .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+    {
+        AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate | DecompressionMethods.Brotli
+    });
 
 // ✅ Forwarded headers options (MUST be before Build)
 builder.Services.Configure<ForwardedHeadersOptions>(o =>
