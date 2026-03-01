@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace YoutubeDownloader.Web.Controllers;
+namespace Web.Controllers;
 
 public class CultureController : Controller
 {

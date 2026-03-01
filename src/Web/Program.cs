@@ -1,12 +1,15 @@
 using System.Globalization;
+using Application.Interfaces;
+using Application.Services;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 
-using YoutubeDownloader.Application.Interfaces;
-using YoutubeDownloader.Application.Services;
-using YoutubeDownloader.Infrastructure.Services;
-
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
 
 // ✅ Localization
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");

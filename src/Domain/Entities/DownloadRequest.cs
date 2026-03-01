@@ -1,4 +1,4 @@
-namespace YoutubeDownloader.Domain.Entities;
+namespace Domain.Entities;
 
 public class DownloadRequest
 {

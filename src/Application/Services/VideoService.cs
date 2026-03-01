@@ -1,79 +1,104 @@
-using YoutubeDownloader.Application.DTOs;
-using YoutubeDownloader.Application.Interfaces;
-using YoutubeDownloader.Domain.Entities;
+using Application.DTOs;
+using Application.Interfaces;
+using Domain.Entities;
+using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Logging;
 
-namespace YoutubeDownloader.Application.Services;
+namespace Application.Services;
 
-public class VideoService
+public class VideoService(
+    IYoutubeService youtubeService,
+    IStringLocalizer<VideoService> L,
+    ILogger<VideoService> logger)
 {
-    private readonly IYoutubeService _youtubeService;
+    public bool IsValidUrl(string url) => youtubeService.IsValidYoutubeUrl(url);
 
-    public VideoService(IYoutubeService youtubeService)
-    {
-        _youtubeService = youtubeService;
-    }
-
-    public bool IsValidUrl(string url) => _youtubeService.IsValidYoutubeUrl(url);
-
-    public async Task<ApiResponseDto<VideoInfoDto>> GetVideoInfoAsync(string url, CancellationToken cancellationToken = default)
+    public async Task<ApiResponseDto<VideoInfoDto>> GetVideoInfoAsync(
+        string url,
+        CancellationToken cancellationToken = default)
     {
         try
         {
             if (string.IsNullOrWhiteSpace(url))
-                return ApiResponseDto<VideoInfoDto>.Fail("URL boş olamaz.");
+                return ApiResponseDto<VideoInfoDto>.Fail(L["UrlEmpty"]);
 
-            if (!_youtubeService.IsValidYoutubeUrl(url))
-                return ApiResponseDto<VideoInfoDto>.Fail("Geçerli bir YouTube URL'si giriniz.");
+            if (!youtubeService.IsValidYoutubeUrl(url))
+                return ApiResponseDto<VideoInfoDto>.Fail(L["InvalidYoutubeUrl"]);
 
-            var videoInfo = await _youtubeService.GetVideoInfoAsync(url, cancellationToken);
+            var videoInfo = await youtubeService.GetVideoInfoAsync(url, cancellationToken);
             var dto = MapToDto(videoInfo);
             return ApiResponseDto<VideoInfoDto>.Ok(dto);
         }
+        catch (OperationCanceledException oce) when (cancellationToken.IsCancellationRequested)
+        {
+            // Normal: user cancel / request aborted
+            logger.LogInformation(oce, "GetVideoInfoAsync canceled. Url={Url}", url);
+            return ApiResponseDto<VideoInfoDto>.Fail(L["VideoInfoFailed"]);
+        }
         catch (Exception ex)
         {
-            return ApiResponseDto<VideoInfoDto>.Fail($"Video bilgisi alınamadı: {ex.Message}");
+            logger.LogError(ex, "GetVideoInfoAsync failed. Url={Url}", url);
+            // Client’a stacktrace göndermiyoruz
+            return ApiResponseDto<VideoInfoDto>.Fail(L["VideoInfoFailed"]);
         }
     }
 
     public async Task<(Stream? Stream, string FileName, string ContentType)> DownloadVideoAsync(
-        string url, string formatId, CancellationToken cancellationToken = default)
+        string url,
+        string formatId,
+        CancellationToken cancellationToken = default)
     {
-        if (!_youtubeService.IsValidYoutubeUrl(url))
-            throw new ArgumentException("Geçersiz YouTube URL'si.");
-
-        var videoInfo = await _youtubeService.GetVideoInfoAsync(url, cancellationToken);
-        var format = videoInfo.AvailableFormats.FirstOrDefault(f => f.FormatId == formatId);
-
-        // download
-        var stream = await _youtubeService.DownloadVideoAsync(url, formatId, cancellationToken);
-
-        // file ext + content-type
-        var ext = (format?.Extension ?? "mp4").ToLowerInvariant();
-
-        // safe filename
-        var safeTitle = string.Concat(videoInfo.Title.Split(Path.GetInvalidFileNameChars()));
-        if (string.IsNullOrWhiteSpace(safeTitle)) safeTitle = "video";
-
-        var fileName = $"{safeTitle}.{ext}";
-
-        var contentType = ext switch
+        try
         {
-            "mp4" => "video/mp4",
-            "webm" => "video/webm",
-            "m4a" => "audio/mp4",
-            _ => ext == "mp3" ? "audio/mpeg" : "application/octet-stream"
-        };
+            if (!youtubeService.IsValidYoutubeUrl(url))
+                throw new ArgumentException(L["InvalidYoutubeUrlArg"]);
 
-        return (stream, fileName, contentType);
+            var videoInfo = await youtubeService.GetVideoInfoAsync(url, cancellationToken);
+
+            var format = videoInfo.AvailableFormats.FirstOrDefault(f => f.FormatId == formatId);
+            if (format is null)
+                throw new InvalidOperationException(L["FormatNotFound"]);
+
+            var stream = await youtubeService.DownloadVideoAsync(url, formatId, cancellationToken);
+
+            var ext = (format.Extension ?? "mp4").ToLowerInvariant();
+
+            var safeTitle = string.Concat((videoInfo.Title ?? "video").Split(Path.GetInvalidFileNameChars()));
+            if (string.IsNullOrWhiteSpace(safeTitle)) safeTitle = "video";
+
+            var fileName = $"{safeTitle}.{ext}";
+
+            var contentType = ext switch
+            {
+                "mp4" => "video/mp4",
+                "webm" => "video/webm",
+                "m4a" => "audio/mp4",
+                "mp3" => "audio/mpeg",
+                _ => "application/octet-stream"
+            };
+
+            return (stream, fileName, contentType);
+        }
+        catch (OperationCanceledException oce) when (cancellationToken.IsCancellationRequested)
+        {
+            logger.LogInformation(oce, "DownloadVideoAsync canceled. Url={Url}, FormatId={FormatId}", url, formatId);
+            throw; // controller 499/400’a çevirebilir
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "DownloadVideoAsync failed. Url={Url}, FormatId={FormatId}", url, formatId);
+            // Controller tarafında bunu yakalayıp L["DownloadFailed"] dönebilirsin,
+            // ama burada da exception mesajını "safe" hale getiriyoruz:
+            throw new InvalidOperationException(L["DownloadFailed"]);
+        }
     }
 
     private VideoInfoDto MapToDto(VideoInfo videoInfo)
     {
-        // ✅ IMPORTANT: audio-only да чыгыш керек, “mp3” деп текшербейбиз
         var formats = videoInfo.AvailableFormats
-            .OrderByDescending(f => f.IsRecommended)               // recommended биринчи
-            .ThenByDescending(f => ParseHeightSafe(f.Resolution))  // анан резолюция
-            .ThenByDescending(f => f.Bitrate)                      // анан bitrate
+            .OrderByDescending(f => f.IsRecommended)
+            .ThenByDescending(f => ParseHeightSafe(f.Resolution))
+            .ThenByDescending(f => f.Bitrate)
             .Select(f => new VideoFormatDto
             {
                 FormatId = f.FormatId,
@@ -82,7 +107,7 @@ public class VideoService
                 Extension = f.Extension,
                 FileSize = f.FileSize,
                 Label = BuildLabel(f),
-                IsRecommended = f.IsRecommended                     // ✅ i==0 ЭМЕС
+                IsRecommended = f.IsRecommended
             })
             .ToList();
 
@@ -100,16 +125,13 @@ public class VideoService
 
     private static string BuildLabel(VideoFormat f)
     {
-        // Audio-only
         if (!f.HasVideo)
             return $"🎵 Audio ({f.Extension.ToUpper()}) - {f.Quality}";
 
-        // Muxed (video+audio)
         if (f.HasAudio)
             return $"🎬 {f.Resolution} {f.Extension.ToUpper()} (Video+Audio)";
 
-        // Video-only (HD)
-        return $"🎞️ {f.Resolution} {f.Extension.ToUpper()} (HD, ses ayrı)";
+        return $"🎞️ {f.Resolution} {f.Extension.ToUpper()} (HD, separate audio)";
     }
 
     private static int ParseHeightSafe(string resolution)

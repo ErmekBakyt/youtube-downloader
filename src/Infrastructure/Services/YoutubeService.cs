@@ -1,12 +1,12 @@
 using System.Diagnostics;
 using System.Text.RegularExpressions;
-using YoutubeDownloader.Application.Interfaces;
-using YoutubeDownloader.Domain.Entities;
+using Application.Interfaces;
+using Domain.Entities;
 using YoutubeExplode;
 using YoutubeExplode.Common;
 using YoutubeExplode.Videos.Streams;
 
-namespace YoutubeDownloader.Infrastructure.Services;
+namespace Infrastructure.Services;
 
 public partial class YoutubeService : IYoutubeService
 {

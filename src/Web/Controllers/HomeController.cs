@@ -1,8 +1,8 @@
+using Application.DTOs;
+using Application.Services;
 using Microsoft.AspNetCore.Mvc;
-using YoutubeDownloader.Application.DTOs;
-using YoutubeDownloader.Application.Services;
 
-namespace YoutubeDownloader.Web.Controllers;
+namespace Web.Controllers;
 
 public class HomeController(VideoService videoService, ILogger<HomeController> logger) : Controller
 {

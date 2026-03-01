@@ -1,4 +1,4 @@
-namespace YoutubeDownloader.Application.DTOs;
+namespace Application.DTOs;
 
 public class VideoInfoDto
 {

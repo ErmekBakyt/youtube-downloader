@@ -1,6 +1,6 @@
-using YoutubeDownloader.Domain.Entities;
+using Domain.Entities;
 
-namespace YoutubeDownloader.Application.Interfaces;
+namespace Application.Interfaces;
 
 public interface IYoutubeService
 {
